@@ -1,0 +1,125 @@
+import java.awt.*;
+import java.util.*;
+
+public class Texto extends Figura{
+
+		protected Ponto inicio;
+		
+		protected int largura, altura;
+		
+		protected Font fonte;
+		
+		protected String conteudo;
+	
+	
+	    public Texto (int x, int y, Color cor, String conteudo, Font fonte)
+	    {
+	        super (cor);	        	      
+	        
+	        this.inicio = new Ponto (x,y);
+	      
+	        this.conteudo = conteudo;
+	        
+	        this.fonte    = fonte;
+	        
+	    }
+	    
+	    public Texto (String s)
+	    {
+	    	StringTokenizer quebrador = new StringTokenizer(s,":");
+
+	        quebrador.nextToken();
+	
+	        int   x   = Integer.parseInt(quebrador.nextToken());
+	        int   y   = Integer.parseInt(quebrador.nextToken());
+	
+	        String nomeFonte = quebrador.nextToken();
+	        int tipoFonte    = Integer.parseInt(quebrador.nextToken());
+	        int tamanhoFonte = Integer.parseInt(quebrador.nextToken());
+	        			        	        	       
+	        String conteudo = quebrador.nextToken();
+	
+	        Color cor = new Color (Integer.parseInt(quebrador.nextToken()),  // R
+	                               Integer.parseInt(quebrador.nextToken()),  // G
+	                               Integer.parseInt(quebrador.nextToken())); // B
+	
+	        this.inicio    = new Ponto (x,y,cor);
+	        this.conteudo  = conteudo;
+	        this.cor       = cor;
+	        this.fonte     = new Font (nomeFonte, tipoFonte, tamanhoFonte);		    		   
+	    }
+	    
+	    public void torneSeVisivel (Graphics g)
+	    {	    
+	    	g.setColor(this.cor);
+	    	g.setFont(this.fonte);
+	    	FontMetrics medida = g.getFontMetrics(this.fonte);
+	    	this.inicio.y += medida.getHeight();
+	        g.drawString(this.conteudo, this.inicio.getX(), this.inicio.getY());
+	        
+	    }
+	    
+	    public void setInicio (int x, int y)
+	    {
+	        this.inicio = new Ponto (x,y,this.getCor());
+	    }
+
+	    public void setLargura (int largura)
+	    {
+	        this.largura = largura;	        
+	    }	  
+
+	    public void setAltura (int altura)
+	    {
+	        this.altura = altura;	        
+	    }
+	    
+	    public void setConteudo (String conteudo)
+	    {
+	    	this.conteudo = conteudo;
+	    }
+	    
+	    public Ponto getInicio ()
+	    {
+	        return this.inicio;
+	    }
+
+	    public int getLargura ()
+	    {
+	        return this.largura;	        
+	    }
+
+	    public int getAltura ()
+	    {	    	
+	    	return this.altura;
+	    }
+	    
+	    public String getConteudo()
+	    {
+	    	return this.conteudo;
+	    }
+	    
+		
+	    public String toString()
+	    {
+	        return "t:" +
+	               this.inicio.getX() +
+	               ":" +
+	               this.inicio.getY() +
+	               ":" +
+	               this.fonte.getFontName()+
+	               ":"+
+	               this.fonte.getStyle()+
+	               ":"+
+	               this.fonte.getSize()+
+	               ":"+
+	               this.conteudo +
+	               ":" +
+	               this.getCor().getRed() +
+	               ":" +
+	               this.getCor().getGreen() +
+	               ":" +
+	               this.getCor().getBlue();
+	    }
+	
+}
